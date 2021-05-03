@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="membership">
+		
+		<resultMap class="kr.or.ddit.membership.vo.MembershipVO" id="membershipMap">
+		
+			<result property="membershipCode" column="membership_code"/>
+			<result property="membershipNm" column="membership_nm"/>
+			<result property="membershipDetail" column="membership_detail"/>
+		
+		</resultMap>
+		
+		<select id="selectmembershipPathList" parameterClass="kr.or.ddit.membership.vo.MembershipVO" resultMap="membershipMap">
+			SELECT MEMBERSHIP_CODE
+			     , MEMBERSHIP_NM
+			     , MEMBERSHIP_DETAIL
+			FROM   MEMBERSHIP 
+			WHERE  1=1
+			<isNotEmpty property="membershipCode">
+			AND MEMBERSHIP_CODE LIKE '%' || #membershipCode# || '%'
+			</isNotEmpty> 
+			<isNotEmpty property="membershipNm">
+			AND MEMBERSHIP_NM LIKE '%' || #membershipNm# || '%'
+			</isNotEmpty>
+			<isNotEmpty property="membershipDetail">
+			AND MEMBERSHIP_DETAIL LIKE '%' || #membershipDetail# || '%' 
+			</isNotEmpty>
+			
+		</select>
+		
+		</sqlMap>
+
+
+
+
+
